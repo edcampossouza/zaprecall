@@ -5,19 +5,21 @@ import { cards as initialCards } from "./data";
 import styled from "styled-components";
 
 function App() {
-  initialCards.forEach((card) => (card.played = false));
+  // possible statuses:
+  // unplayed, playing, revealed, correct, almost, wrong
+  initialCards.forEach((card) => (card.status = "playing"));
   const [cards, setCards] = useState(initialCards);
   return (
     <Container>
       <GlobalStyle />
-      <Game />
+      <Game cards={cards} />
     </Container>
   );
 }
 
 const Container = styled.div`
   font-family: "Recursive", sans-serif;
-  background-color: #FB6B6B;
+  background-color: #fb6b6b;
   display: flex;
   flex-direction: column;
   align-items: center;

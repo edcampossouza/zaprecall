@@ -1,14 +1,19 @@
-import { logRoles } from "@testing-library/react";
+import Question from "./Question";
 import styled from "styled-components";
 import logo from "../assets/img/logo.png";
 
-export default function Game() {
+export default function Game({ cards }) {
   return (
     <>
       <Title>
         <img src={logo} />
         <span>ZapRecall</span>
       </Title>
+      <QuestionContainer>
+        {cards.map((card, index) => (
+          <Question question={card} number={index + 1} />
+        ))}
+      </QuestionContainer>
     </>
   );
 }
@@ -28,4 +33,8 @@ const Title = styled.h1`
     width: 52px;
     height: 60px;
   }
+`;
+
+const QuestionContainer = styled.ul`
+  margin-top: 51px;
 `;
