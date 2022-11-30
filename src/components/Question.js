@@ -70,6 +70,8 @@ export default function Question({
         </AlmostCard>
       );
       break;
+    default:
+      content = "Algo deu errado...";
   }
   return content;
 }

@@ -27,7 +27,7 @@ export default function Game({ cards, setCards }) {
   return (
     <>
       <Title>
-        <img src={logo} />
+        <img src={logo} alt="logo"/>
         <span>ZapRecall</span>
       </Title>
       <QuestionContainer>
