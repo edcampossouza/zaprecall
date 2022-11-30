@@ -16,6 +16,11 @@ export default function Game({ cards, setCards }) {
     newCards[index].status = "revealed";
     setCards(newCards);
   }
+  function setStatus(index, status) {
+    const newCards = cards.map((a) => ({ ...a }));
+    newCards[index].status = status;
+    setCards(newCards);
+  }
   return (
     <>
       <Title>
@@ -30,6 +35,7 @@ export default function Game({ cards, setCards }) {
             number={index}
             playCard={() => playCard(index)}
             showAnswer={() => showAnswer(index)}
+            setStatus={(status) => setStatus(index, status)}
           />
         ))}
       </QuestionContainer>
