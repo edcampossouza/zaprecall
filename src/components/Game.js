@@ -3,7 +3,14 @@ import Footer from "./Footer";
 import styled from "styled-components";
 import logo from "../assets/img/logo.png";
 
-export default function Game({ cards }) {
+export default function Game({ cards, setCards }) {
+  function playCard(index) {
+    const newCards = cards.map((a) =>
+      a.status === "playing" ? { ...a, status: "unplayed" } : { ...a }
+    );
+    newCards[index].status = "playing";
+    setCards(newCards);
+  }
   return (
     <>
       <Title>
@@ -12,7 +19,12 @@ export default function Game({ cards }) {
       </Title>
       <QuestionContainer>
         {cards.map((card, index) => (
-          <Question question={card} number={index + 1} />
+          <Question
+            key={index}
+            question={card}
+            number={index}
+            playCard={() => playCard(index)}
+          />
         ))}
       </QuestionContainer>
       <Footer />

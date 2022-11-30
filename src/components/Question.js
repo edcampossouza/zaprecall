@@ -2,13 +2,13 @@ import styled from "styled-components";
 import arrowPlay from "../assets/img/seta_play.png";
 import arrowReveal from "../assets/img/seta-virar.png";
 
-export default function Question({ question, number }) {
+export default function Question({ question, number, playCard }) {
   let content = null;
   switch (question.status) {
     case "unplayed":
       content = (
-        <UnplayedCard>
-          Pergunta {number} <ImgSetaPlay src={arrowPlay} />{" "}
+        <UnplayedCard onClick={playCard}>
+          Pergunta {number + 1} <ImgSetaPlay src={arrowPlay} />{" "}
         </UnplayedCard>
       );
       break;

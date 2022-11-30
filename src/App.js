@@ -12,7 +12,7 @@ function App() {
   return (
     <Container>
       <GlobalStyle />
-      <Game cards={cards} />
+      <Game cards={cards} setCards={setCards} />
     </Container>
   );
 }
