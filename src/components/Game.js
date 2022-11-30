@@ -21,6 +21,9 @@ export default function Game({ cards, setCards }) {
     newCards[index].status = status;
     setCards(newCards);
   }
+  function isCardDone(card) {
+    return ["wrong", "almost", "correct"].includes(card.status);
+  }
   return (
     <>
       <Title>
@@ -39,7 +42,10 @@ export default function Game({ cards, setCards }) {
           />
         ))}
       </QuestionContainer>
-      <Footer />
+      <Footer
+        done={cards.filter((a) => isCardDone(a)).length}
+        total={cards.length}
+      />
     </>
   );
 }

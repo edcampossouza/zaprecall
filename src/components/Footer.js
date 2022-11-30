@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
-export default function Footer() {
-  return <FooterStyle>0/4 CONCLUÍDOS</FooterStyle>;
+export default function Footer({ done, total }) {
+  return (
+    <FooterStyle>
+      {done}/{total} CONCLUÍDOS
+    </FooterStyle>
+  );
 }
 
 const FooterStyle = styled.div`
