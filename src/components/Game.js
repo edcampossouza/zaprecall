@@ -1,4 +1,5 @@
 import Question from "./Question";
+import Footer from "./Footer";
 import styled from "styled-components";
 import logo from "../assets/img/logo.png";
 
@@ -14,16 +15,25 @@ export default function Game({ cards }) {
           <Question question={card} number={index + 1} />
         ))}
       </QuestionContainer>
+      <Footer />
     </>
   );
 }
 
 const Title = styled.h1`
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  height: 102px;
+  display: flex;
+  justify-content: center;
   font-family: "Righteous", cursive;
   font-weight: 400;
   font-size: 36px;
   display: flex;
   align-items: center;
+  background-color: #fb6b6b;
   color: #ffffff;
   span {
     width: 204px;
@@ -36,5 +46,6 @@ const Title = styled.h1`
 `;
 
 const QuestionContainer = styled.ul`
-  margin-top: 51px;
+  margin-top: 150px;
+  margin-bottom: 116px;
 `;

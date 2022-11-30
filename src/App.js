@@ -7,7 +7,7 @@ import styled from "styled-components";
 function App() {
   // possible statuses:
   // unplayed, playing, revealed, correct, almost, wrong
-  initialCards.forEach((card) => (card.status = "playing"));
+  initialCards.forEach((card) => (card.status = "unplayed"));
   const [cards, setCards] = useState(initialCards);
   return (
     <Container>
