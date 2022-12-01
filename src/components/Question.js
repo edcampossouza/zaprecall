@@ -16,33 +16,54 @@ export default function Question({
   switch (question.status) {
     case "unplayed":
       content = (
-        <UnplayedCard onClick={playCard}>
-          Pergunta {number + 1} <ImgSetaPlay src={arrowPlay} />{" "}
+        <UnplayedCard data-test="flashcard">
+          <span data-test="flashcard-text">Pergunta {number + 1}</span>
+          <ImgSetaPlay
+            onClick={playCard}
+            src={arrowPlay}
+            data-test="play-btn"
+          />{" "}
         </UnplayedCard>
       );
       break;
     case "playing":
       content = (
-        <PlayingCard>
-          {question.question}{" "}
+        <PlayingCard data-test="flashcard">
+          <span data-test="flashcard-text">{question.question}</span>
           <ImgContainer>
-            <ImgSetaReveal src={arrowReveal} onClick={showAnswer} />
+            <ImgSetaReveal
+              src={arrowReveal}
+              onClick={showAnswer}
+              data-test="turn-btn"
+            />
           </ImgContainer>
         </PlayingCard>
       );
       break;
     case "revealed":
       content = (
-        <RevealedCard>
-          {question.answer}
+        <RevealedCard data-test="flashcard">
+          <span data-test="flashcard-text">{question.answer}</span>
           <ButtonsContainer>
-            <AnswerButton color="#FF3030" onClick={() => setStatus("wrong")}>
+            <AnswerButton
+              color="#FF3030"
+              onClick={() => setStatus("wrong")}
+              data-test="no-btn"
+            >
               Não lembrei{" "}
             </AnswerButton>
-            <AnswerButton color="#FF922E" onClick={() => setStatus("almost")}>
+            <AnswerButton
+              color="#FF922E"
+              onClick={() => setStatus("almost")}
+              data-test="partial-btn"
+            >
               Quase não lembrei
             </AnswerButton>
-            <AnswerButton color="#2FBE34" onClick={() => setStatus("correct")}>
+            <AnswerButton
+              color="#2FBE34"
+              onClick={() => setStatus("correct")}
+              data-test="zap-btn"
+            >
               Zap!
             </AnswerButton>
           </ButtonsContainer>
@@ -51,22 +72,25 @@ export default function Question({
       break;
     case "wrong":
       content = (
-        <WrongCard>
-          Pergunta {number + 1} <ImgIcon src={icon_wrong} />{" "}
+        <WrongCard data-test="flashcard">
+          <span data-test="flashcard-text">Pergunta {number + 1}</span>
+          <ImgIcon src={icon_wrong} data-test="no-icon" />
         </WrongCard>
       );
       break;
     case "correct":
       content = (
-        <CorrectCard>
-          Pergunta {number + 1} <ImgIcon src={icon_correct} />{" "}
+        <CorrectCard data-test="flashcard">
+          <span data-test="flashcard-text">Pergunta {number + 1}</span>
+          <ImgIcon src={icon_correct} data-test="zap-icon" />{" "}
         </CorrectCard>
       );
       break;
     case "almost":
       content = (
-        <AlmostCard>
-          Pergunta {number + 1} <ImgIcon src={icon_almost} />{" "}
+        <AlmostCard data-test="flashcard">
+          <span data-test="flashcard-text">Pergunta {number + 1}</span>
+          <ImgIcon src={icon_almost} data-test="partial-icon" />{" "}
         </AlmostCard>
       );
       break;
@@ -79,6 +103,9 @@ export default function Question({
 const ImgSetaPlay = styled.img`
   width: 20px;
   height: 23px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const ImgContainer = styled.div`
@@ -136,9 +163,6 @@ const UnplayedCard = styled(BaseCard)`
   align-items: center;
   font-size: 16px;
   height: 65px;
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 const PlayingCard = styled(BaseCard)`

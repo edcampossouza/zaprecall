@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export default function Footer({ done, total }) {
   return (
-    <FooterStyle>
+    <FooterStyle data-test="footer">
       {done}/{total} CONCLUÍDOS
     </FooterStyle>
   );
