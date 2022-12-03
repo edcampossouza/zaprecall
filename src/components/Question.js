@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import arrowPlay from "../assets/img/seta_play.png";
 import arrowReveal from "../assets/img/seta-virar.png";
+import icon_correct from "../assets/img/icone_certo.png";
+import icon_almost from "../assets/img/icone_quase.png";
+import icon_wrong from "../assets/img/icone_erro.png";
 
 export default function Question({
   question,
@@ -25,6 +28,11 @@ export default function Question({
             onClick={playCard}
             src={arrowPlay}
             data-test="play-btn"
+          />
+        ) : ["wrong", "correct", "almost"].includes(status) ? (
+          <ImgIcon
+            data-test={iconsDataTestsMap[status]}
+            src={iconsMap[status]}
           />
         ) : null}
       </Row>
@@ -67,6 +75,18 @@ export default function Question({
     </Card>
   );
 }
+
+const iconsMap = {
+  wrong: icon_wrong,
+  almost: icon_almost,
+  correct: icon_correct,
+};
+
+const iconsDataTestsMap = {
+  wrong: "no-icon",
+  almost: "partial-icon",
+  correct: "zap-icon",
+};
 
 const colorsMap = {
   wrong: "#ff3030",
@@ -137,4 +157,9 @@ const AnswerButton = styled.button`
   &:hover {
     cursor: pointer;
   }
+`;
+
+const ImgIcon = styled.img`
+  width: 23px;
+  height: 23px;
 `;
