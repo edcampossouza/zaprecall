@@ -103,6 +103,12 @@ const Card = styled.li`
       ? "#ffffd4"
       : "#ffffff"};
   color: ${(props) => colorsMap[props.status] || "#333333"};
+  font-size: ${(props) =>
+    props.status === "playing" || props.status === "revealed"
+      ? "18px"
+      : "16px"};
+  font-weight: ${(props) =>
+    props.status === "playing" || props.status === "revealed" ? "400" : "700"};
   text-decoration-line: ${(props) =>
     colorsMap[props.status] ? "line-through" : "none"};
   width: 300px;
