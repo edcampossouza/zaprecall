@@ -1,9 +1,6 @@
 import styled from "styled-components";
 import arrowPlay from "../assets/img/seta_play.png";
 import arrowReveal from "../assets/img/seta-virar.png";
-import icon_correct from "../assets/img/icone_certo.png";
-import icon_almost from "../assets/img/icone_quase.png";
-import icon_wrong from "../assets/img/icone_erro.png";
 
 export default function Question({
   question,
@@ -12,38 +9,36 @@ export default function Question({
   showAnswer,
   setStatus,
 }) {
-  let content = null;
-  switch (question.status) {
-    case "unplayed":
-      content = (
-        <UnplayedCard data-test="flashcard">
-          <span data-test="flashcard-text">Pergunta {number + 1}</span>
+  const status = question.status;
+  return (
+    <Card data-test="flashcard" status={status}>
+      <Row>
+        <span data-test="flashcard-text">
+          {status === "playing"
+            ? question.question
+            : status === "revealed"
+            ? question.answer
+            : `Pergunta ${number + 1}`}
+        </span>
+        {status === "unplayed" ? (
           <ImgSetaPlay
             onClick={playCard}
             src={arrowPlay}
             data-test="play-btn"
+          />
+        ) : null}
+      </Row>
+
+      {status === "playing" ? (
+        <Row align={"end"}>
+          <ImgArrowReveal
+            src={arrowReveal}
+            onClick={showAnswer}
+            data-test="turn-btn"
           />{" "}
-        </UnplayedCard>
-      );
-      break;
-    case "playing":
-      content = (
-        <PlayingCard data-test="flashcard">
-          <span data-test="flashcard-text">{question.question}</span>
-          <ImgContainer>
-            <ImgSetaReveal
-              src={arrowReveal}
-              onClick={showAnswer}
-              data-test="turn-btn"
-            />
-          </ImgContainer>
-        </PlayingCard>
-      );
-      break;
-    case "revealed":
-      content = (
-        <RevealedCard data-test="flashcard">
-          <span data-test="flashcard-text">{question.answer}</span>
+        </Row>
+      ) : status === "revealed" ? (
+        <Row>
           <ButtonsContainer>
             <AnswerButton
               color="#FF3030"
@@ -67,38 +62,23 @@ export default function Question({
               Zap!
             </AnswerButton>
           </ButtonsContainer>
-        </RevealedCard>
-      );
-      break;
-    case "wrong":
-      content = (
-        <WrongCard data-test="flashcard">
-          <span data-test="flashcard-text">Pergunta {number + 1}</span>
-          <ImgIcon src={icon_wrong} data-test="no-icon" />
-        </WrongCard>
-      );
-      break;
-    case "correct":
-      content = (
-        <CorrectCard data-test="flashcard">
-          <span data-test="flashcard-text">Pergunta {number + 1}</span>
-          <ImgIcon src={icon_correct} data-test="zap-icon" />{" "}
-        </CorrectCard>
-      );
-      break;
-    case "almost":
-      content = (
-        <AlmostCard data-test="flashcard">
-          <span data-test="flashcard-text">Pergunta {number + 1}</span>
-          <ImgIcon src={icon_almost} data-test="partial-icon" />{" "}
-        </AlmostCard>
-      );
-      break;
-    default:
-      content = "Algo deu errado...";
-  }
-  return content;
+        </Row>
+      ) : null}
+    </Card>
+  );
 }
+
+const colorsMap = {
+  wrong: "#ff3030",
+  almost: "#ff922e",
+  correct: "#2fbe34",
+};
+
+const Row = styled.span`
+  display: flex;
+  justify-content: ${(props) =>
+    props.align === "end" ? "flex-end" : "space-between"};
+`;
 
 const ImgSetaPlay = styled.img`
   width: 20px;
@@ -108,12 +88,7 @@ const ImgSetaPlay = styled.img`
   }
 `;
 
-const ImgContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const ImgSetaReveal = styled.img`
+const ImgArrowReveal = styled.img`
   width: 30px;
   height: 20px;
   &:hover {
@@ -121,13 +96,15 @@ const ImgSetaReveal = styled.img`
   }
 `;
 
-const ImgIcon = styled.img`
-  width: 23px;
-  height: 23px;
-`;
-
-const BaseCard = styled.li`
+const Card = styled.li`
   font-family: "Recursive", sans-serif;
+  background-color: ${(props) =>
+    props.status === "playing" || props.status === "revealed"
+      ? "#ffffd4"
+      : "#ffffff"};
+  color: ${(props) => colorsMap[props.status] || "#333333"};
+  text-decoration-line: ${(props) =>
+    colorsMap[props.status] ? "line-through" : "none"};
   width: 300px;
   margin-bottom: 25px;
   padding: 15px;
@@ -138,6 +115,7 @@ const ButtonsContainer = styled.div`
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
+  width: 100%;
 `;
 const AnswerButton = styled.button`
   width: 85px;
@@ -152,55 +130,5 @@ const AnswerButton = styled.button`
   font-family: "Recursive", sans-serif;
   &:hover {
     cursor: pointer;
-  }
-`;
-
-const UnplayedCard = styled(BaseCard)`
-  font-weight: 700;
-  background-color: #ffffff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 16px;
-  height: 65px;
-`;
-
-const PlayingCard = styled(BaseCard)`
-  background-color: #ffffd4;
-  min-height: 131px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  &div.ImgContainer {
-    display: flex;
-    justify-content: flex-end;
-  }
-`;
-
-const RevealedCard = styled(BaseCard)`
-  background-color: #ffffd4;
-`;
-
-const CorrectCard = styled(UnplayedCard)`
-  color: #2fbe34;
-  text-decoration-line: line-through;
-  &:hover {
-    cursor: default;
-  }
-`;
-
-const AlmostCard = styled(UnplayedCard)`
-  color: #ff922e;
-  text-decoration-line: line-through;
-  &:hover {
-    cursor: default;
-  }
-`;
-
-const WrongCard = styled(UnplayedCard)`
-  color: #ff3030;
-  text-decoration-line: line-through;
-  &:hover {
-    cursor: default;
   }
 `;
